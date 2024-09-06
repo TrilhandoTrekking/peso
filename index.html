@@ -85,12 +85,16 @@
             // Cálculo do IMC
             var imc = pesoCorporal / Math.pow(altura / 100, 2);
 
-            // Base de cálculo de 20% do peso corporal
-            var percentualBase = 0.20;
+            // Definição de percentuais baseados no gênero
+            var percentualBase;
+            if (genero === "homem") {
+                percentualBase = 0.20; // 20% do peso corporal para homens
+            } else if (genero === "mulher") {
+                percentualBase = 0.15; // 15% do peso corporal para mulheres
+            }
 
             // Ajuste do percentual baseado no IMC
             var ajustePercentual = 0;
-
             if (imc < 18.5) {
                 ajustePercentual = -0.02; // Reduz 2% para pessoas abaixo do peso
             } else if (imc >= 25) {
