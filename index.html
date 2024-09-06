@@ -86,21 +86,18 @@
             var imc = pesoCorporal / Math.pow(altura / 100, 2);
 
             // Percentuais base para homens e mulheres
-            var percentualBase;
-            if (genero === "homem") {
-                percentualBase = 0.20; // 20% do peso corporal para homens
-            } else if (genero === "mulher") {
-                percentualBase = 0.15; // 15% do peso corporal para mulheres
-            }
+            var percentualBase = genero === "homem" ? 0.20 : 0.15;
 
             // Ajuste dinâmico do percentual
-            var percentualMinimo = 0.10; // Percentual mínimo para evitar carga excessiva
-            var pesoCorporalReferencia = 80; // Peso de referência para ajuste
+            var percentualMinimo = 0.10;
+            var pesoCorporalReferencia = 80;
+            var fatorReducao = 0.005;
 
             // Calcula a redução proporcional do percentual
             if (pesoCorporal > pesoCorporalReferencia) {
-                var percentualReduzido = percentualBase - (0.10 * (pesoCorporal - pesoCorporalReferencia) / pesoCorporalReferencia);
-                percentualBase = Math.max(percentualReduzido, percentualMinimo);
+                var reducaoPercentual = fatorReducao * (pesoCorporal - pesoCorporalReferencia);
+                percentualBase -= reducaoPercentual;
+                percentualBase = Math.max(percentualBase, percentualMinimo);
             }
 
             // Cálculo do peso ideal da mochila
