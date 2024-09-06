@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Localização Atual</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sua Localização Atual</h1>
+    <button onclick="getLocation()">Mostrar Localização</button>
+    <p id="status"></p>
+    <div id="map"></div>
+
+    <script>
+        function getLocation() {
+            const status = document.getElementById('status');
+            if (navigator.geolocation) {
+                status.textContent = 'Obtendo localização...';
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                status.textContent = 'Geolocalização não é suportada pelo seu navegador.';
+            }
+        }
+
+        function showPosition(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            document.getElementById('status').textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
+
+            // Mostrar a localização no mapa usando Google Maps
+            const mapUrl = `https://www.google.com/maps?q=${latitude},${longitude}&hl=pt&z=15&output=embed`;
+            document.getElementById('map').innerHTML = `<iframe src="${mapUrl}" width="100%" height="400" frameborder="0"></iframe>`;
+        }
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    document.getElementById('status').textContent = "Usuário negou a solicitação de Geolocalização.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    document.getElementById('status').textContent = "Informações de localização indisponíveis.";
+                    break;
+                case error.TIMEOUT:
+                    document.getElementById('status').textContent = "A solicitação para obter a localização expirou.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    document.getElementById('status').textContent = "Ocorreu um erro desconhecido.";
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>
