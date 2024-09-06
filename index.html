@@ -3,63 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Localização Atual</title>
+    <title>Calculadora de Peso Ideal da Mochila</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f0f0f0;
         }
-        #map {
-            height: 400px;
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        form {
+            max-width: 500px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, select {
             width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <h1>Sua Localização Atual</h1>
-    <button onclick="getLocation()">Mostrar Localização</button>
-    <p id="status"></p>
-    <div id="map"></div>
+
+    <h1>Calculadora de Peso Ideal da Mochila</h1>
+    <form id="mochilaForm">
+        <label for="pesoCorporal">Peso Corporal (kg):</label>
+        <input type="number" id="pesoCorporal" name="pesoCorporal" step="0.1" required>
+
+        <label for="genero">Gênero:</label>
+        <select id="genero" name="genero" required>
+            <option value="">Selecione</option>
+            <option value="homem">Homem</option>
+            <option value="mulher">Mulher</option>
+        </select>
+
+        <label for="nivelTrilha">Nível da Trilha:</label>
+        <select id="nivelTrilha" name="nivelTrilha" required>
+            <option value="">Selecione</option>
+            <option value="leve">Leve (10% - 15%)</option>
+            <option value="moderada">Moderada (15% - 20%)</option>
+            <option value="dificil">Difícil (20% - 25%)</option>
+        </select>
+
+        <button type="button" onclick="calcularPesoMochila()">Calcular Peso da Mochila</button>
+
+        <div class="result" id="resultado"></div>
+    </form>
 
     <script>
-        function getLocation() {
-            const status = document.getElementById('status');
-            if (navigator.geolocation) {
-                status.textContent = 'Obtendo localização...';
-                navigator.geolocation.getCurrentPosition(showPosition, showError);
-            } else {
-                status.textContent = 'Geolocalização não é suportada pelo seu navegador.';
+        function calcularPesoMochila() {
+            var pesoCorporal = parseFloat(document.getElementById('pesoCorporal').value);
+            var genero = document.getElementById('genero').value;
+            var nivelTrilha = document.getElementById('nivelTrilha').value;
+            var percentual = 0;
+            
+            if (nivelTrilha === "leve") {
+                percentual = 0.10; // 10%
+            } else if (nivelTrilha === "moderada") {
+                percentual = 0.15; // 15%
+            } else if (nivelTrilha === "dificil") {
+                percentual = 0.20; // 20%
             }
-        }
 
-        function showPosition(position) {
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
+            var pesoMochilaMin = pesoCorporal * percentual;
+            var pesoMochilaMax = pesoCorporal * (percentual + 0.05);
 
-            document.getElementById('status').textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
+            var resultadoTexto = "Para uma trilha " + nivelTrilha + ", o peso ideal da mochila para " + genero + " é entre " + 
+                                 pesoMochilaMin.toFixed(2) + " kg e " + pesoMochilaMax.toFixed(2) + " kg.";
 
-            // Mostrar a localização no mapa usando Google Maps
-            const mapUrl = `https://www.google.com/maps?q=${latitude},${longitude}&hl=pt&z=15&output=embed`;
-            document.getElementById('map').innerHTML = `<iframe src="${mapUrl}" width="100%" height="400" frameborder="0"></iframe>`;
-        }
-
-        function showError(error) {
-            switch(error.code) {
-                case error.PERMISSION_DENIED:
-                    document.getElementById('status').textContent = "Usuário negou a solicitação de Geolocalização.";
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    document.getElementById('status').textContent = "Informações de localização indisponíveis.";
-                    break;
-                case error.TIMEOUT:
-                    document.getElementById('status').textContent = "A solicitação para obter a localização expirou.";
-                    break;
-                case error.UNKNOWN_ERROR:
-                    document.getElementById('status').textContent = "Ocorreu um erro desconhecido.";
-                    break;
-            }
+            document.getElementById('resultado').innerText = resultadoTexto;
         }
     </script>
+
 </body>
 </html>
