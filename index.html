@@ -58,7 +58,7 @@
 
     <h1>Calculadora de Peso Ideal da Mochila</h1>
     <form id="mochilaForm">
-        <label for="pesoCorporal">Peso1 Corporal (kg):</label>
+        <label for="pesoCorporal">Peso2 Corporal (kg):</label>
         <input type="number" id="pesoCorporal" name="pesoCorporal" step="0.01" required>
 
         <label for="altura">Altura (cm):</label>
@@ -85,7 +85,7 @@
             // Cálculo do IMC
             var imc = pesoCorporal / Math.pow(altura / 100, 2);
 
-            // Percentuais base para homens e mulheres
+            // Percentuais base para homens e mulheres para o peso da mochila
             var percentualBase = (genero === "homem") ? 0.10 : 0.07;
 
             // Cálculo do peso ideal da mochila
