@@ -59,7 +59,7 @@
 
     <h1>Calculadora de Peso Ideal da Mochila</h1>
     <form id="mochilaForm">
-        <label for="pesoCorporal">Peso2 Corporal (kg):</label>
+        <label for="pesoCorporal">Peso Corporal (kg):</label>
         <input type="number" id="pesoCorporal" name="pesoCorporal" step="0.1" required>
 
         <label for="altura">Altura (cm):</label>
@@ -118,7 +118,7 @@
             }
 
             // Exibe o resultado com a classificação do IMC
-            var resultadoTexto = "O peso confortável da mochila para " + genero + " é de aproximadamente " + 
+            var resultadoTexto = "O peso confortável da mochila para você é de aproximadamente " + 
                                  pesoMochila.toFixed(2) + " kg.";
 
             document.getElementById('resultado').innerText = resultadoTexto;
