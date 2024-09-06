@@ -1,117 +1,117 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Peso Ideal da Mochila</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
-            background-color: #f0f0f0;
-        }
-        h1 {
-            text-align: center;
-            color: #4CAF50;
-        }
-        form {
-            max-width: 500px;
-            margin: auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-        label {
-            font-weight: bold;
-            display: block;
-            margin: 10px 0 5px;
-        }
-        input, select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .result {
-            text-align: center;
-            margin-top: 20px;
-            font-weight: bold;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Peso Ideal da Mochila</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        form {
+            max-width: 500px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 
-    <h1>Calculadora de Peso Ideal da Mochila</h1>
-    <form id="mochilaForm">
-        <label for="pesoCorporal">Peso Corporal (kg):</label>
-        <input type="number" id="pesoCorporal" name="pesoCorporal" step="0.01" required>
+    <h1>Calculadora de Peso Ideal da Mochila</h1>
+    <form id="mochilaForm">
+        <label for="pesoCorporal">Peso Corporal (kg):</label>
+        <input type="number" id="pesoCorporal" name="pesoCorporal" step="0.01" required>
 
-        <label for="altura">Altura (cm):</label>
-        <input type="number" id="altura" name="altura" step="0.01" required>
+        <label for="altura">Altura (cm):</label>
+        <input type="number" id="altura" name="altura" step="0.01" required>
 
-        <label for="genero">Gênero:</label>
-        <select id="genero" name="genero" required>
-            <option value="">Selecione</option>
-            <option value="homem">Homem</option>
-            <option value="mulher">Mulher</option>
-        </select>
+        <label for="genero">Gênero:</label>
+        <select id="genero" name="genero" required>
+            <option value="">Selecione</option>
+            <option value="homem">Homem</option>
+            <option value="mulher">Mulher</option>
+        </select>
 
-        <button type="button" onclick="calcularPesoMochila()">Calcular Peso da Mochila</button>
+        <button type="button" onclick="calcularPesoMochila()">Calcular Peso da Mochila</button>
 
-        <div class="result" id="resultado"></div>
-    </form>
+        <div class="result" id="resultado"></div>
+    </form>
 
-    <script>
-        function calcularPesoMochila() {
-            var pesoCorporal = parseFloat(document.getElementById('pesoCorporal').value);
-            var altura = parseFloat(document.getElementById('altura').value);
-            var genero = document.getElementById('genero').value;
+    <script>
+        function calcularPesoMochila() {
+            var pesoCorporal = parseFloat(document.getElementById('pesoCorporal').value);
+            var altura = parseFloat(document.getElementById('altura').value);
+            var genero = document.getElementById('genero').value;
 
-            // Cálculo do IMC
-            var imc = pesoCorporal / Math.pow(altura / 100, 2);
+            // Cálculo do IMC
+            var imc = pesoCorporal / Math.pow(altura / 100, 2);
 
-            // Percentuais base para homens e mulheres para o peso da mochila
-            var percentualBase = (genero === "homem") ? 0.10 : 0.07;
+            // Percentuais base para homens e mulheres
+            var percentualBase = (genero === "homem") ? 0.10 : 0.07;
 
-            // Cálculo do peso ideal da mochila
-            var pesoMochila = pesoCorporal * percentualBase;
+            // Cálculo do peso ideal da mochila
+            var pesoMochila = pesoCorporal * percentualBase;
 
-            // Classificação do IMC
-            var classificacaoIMC;
-            if (imc < 18.5) {
-                classificacaoIMC = "Magreza";
-            } else if (imc < 25) {
-                classificacaoIMC = "Normal";
-            } else if (imc < 30) {
-                classificacaoIMC = "Sobrepeso";
-            } else if (imc < 40) {
-                classificacaoIMC = "Obesidade";
-            } else {
-                classificacaoIMC = "Obesidade Grave";
-            }
+            // Classificação do IMC
+            var classificacaoIMC;
+            if (imc < 18.5) {
+                classificacaoIMC = "Magreza";
+            } else if (imc < 25) {
+                classificacaoIMC = "Normal";
+            } else if (imc < 30) {
+                classificacaoIMC = "Sobrepeso";
+            } else if (imc < 40) {
+                classificacaoIMC = "Obesidade";
+            } else {
+                classificacaoIMC = "Obesidade Grave";
+            }
 
-            // Exibe o resultado com a classificação do IMC
-            var resultadoTexto = "Com um IMC de " + imc.toFixed(2) + " (" + classificacaoIMC + "), o peso confortável da mochila para " + genero + " é de aproximadamente " + 
-                                 pesoMochila.toFixed(2) + " kg.";
+            // Exibe o resultado com a classificação do IMC
+            var resultadoTexto = "Com um IMC de " + imc.toFixed(2) + " (" + classificacaoIMC + "), o peso confortável da mochila para " + genero + " é de aproximadamente " + 
+                                 pesoMochila.toFixed(2) + " kg.";
 
-            document.getElementById('resultado').innerText = resultadoTexto;
-        }
-    </script>
+            document.getElementById('resultado').innerText = resultadoTexto;
+        }
+    </script>
 
 </body>
 </html>
