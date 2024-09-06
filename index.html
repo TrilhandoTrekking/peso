@@ -81,21 +81,27 @@
             var pesoCorporal = parseFloat(document.getElementById('pesoCorporal').value);
             var altura = parseFloat(document.getElementById('altura').value);
             var genero = document.getElementById('genero').value;
-            var imc = pesoCorporal / Math.pow(altura / 100, 2); // Cálculo do IMC
 
-            // Ajuste do percentual recomendado para a mochila com base no IMC
-            var percentualBase = 0.15; // 15% do peso corporal como base
+            // Cálculo do IMC
+            var imc = pesoCorporal / Math.pow(altura / 100, 2);
+
+            // Base de cálculo de 20% do peso corporal
+            var percentualBase = 0.20;
+
+            // Ajuste do percentual baseado no IMC
             var ajustePercentual = 0;
 
             if (imc < 18.5) {
-                ajustePercentual = -0.02; // Subtrai 2% se o IMC indicar que a pessoa está abaixo do peso
+                ajustePercentual = -0.02; // Reduz 2% para pessoas abaixo do peso
             } else if (imc >= 25) {
-                ajustePercentual = 0.02; // Adiciona 2% se o IMC indicar sobrepeso
+                ajustePercentual = 0.02; // Aumenta 2% para pessoas com sobrepeso
             }
 
+            // Cálculo do peso ideal da mochila
             var pesoMochila = pesoCorporal * (percentualBase + ajustePercentual);
 
-            var resultadoTexto = "Com um IMC de " + imc.toFixed(2) + ", o peso ideal da mochila para " + genero + " é " + 
+            // Exibe o resultado
+            var resultadoTexto = "Com um IMC de " + imc.toFixed(2) + ", o peso confortável da mochila para " + genero + " é " + 
                                  pesoMochila.toFixed(2) + " kg.";
 
             document.getElementById('resultado').innerText = resultadoTexto;
