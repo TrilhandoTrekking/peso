@@ -116,11 +116,8 @@
                 classificacaoIMC = "Obesidade Grave";
             }
 
-            // Formata o IMC com duas casas antes da vírgula
-            var imcFormatado = imc.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
             // Exibe o resultado com a classificação do IMC
-            var resultadoTexto = "Com um IMC de " + imcFormatado + " (" + classificacaoIMC + "), o peso confortável da mochila para " + genero + " é de aproximadamente " + 
+            var resultadoTexto = "Com um IMC de " + imc.toFixed(2) + " (" + classificacaoIMC + "), o peso confortável da mochila para " + genero + " é de aproximadamente " + 
                                  pesoMochila.toFixed(2) + " kg.";
 
             document.getElementById('resultado').innerText = resultadoTexto;
