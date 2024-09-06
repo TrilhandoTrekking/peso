@@ -85,7 +85,7 @@
             // Cálculo do IMC
             var imc = pesoCorporal / Math.pow(altura / 100, 2);
 
-            // Percentual base para homens e mulheres
+            // Percentuais base para homens e mulheres
             var percentualBase;
             if (genero === "homem") {
                 percentualBase = 0.20; // 20% do peso corporal para homens
@@ -93,11 +93,14 @@
                 percentualBase = 0.15; // 15% do peso corporal para mulheres
             }
 
-            // Ajuste do percentual baseado no IMC
-            if (imc >= 25 && imc < 30) {
-                percentualBase -= 0.03; // Reduz 3% para sobrepeso
-            } else if (imc >= 30) {
-                percentualBase = Math.max(percentualBase - 0.08, 0.12); // Reduz até no máximo 8%, limitando a 12%
+            // Ajuste dinâmico do percentual
+            var percentualMinimo = 0.10; // Percentual mínimo para evitar carga excessiva
+            var pesoCorporalReferencia = 80; // Peso de referência para ajuste
+
+            // Calcula a redução proporcional do percentual
+            if (pesoCorporal > pesoCorporalReferencia) {
+                var percentualReduzido = percentualBase - (0.10 * (pesoCorporal - pesoCorporalReferencia) / pesoCorporalReferencia);
+                percentualBase = Math.max(percentualReduzido, percentualMinimo);
             }
 
             // Cálculo do peso ideal da mochila
