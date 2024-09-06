@@ -89,21 +89,38 @@
             var percentualBase = (genero === "homem") ? 0.20 : 0.15;
 
             // Ajuste dinâmico do percentual com base no peso corporal
-            var pesoCorporalReferencia = 80; // Peso a partir do qual começa a redução do percentual
-            var percentualReducaoMaxima = 0.05; // Máxima redução no percentual base
+            var pesoCorporalReferencia = 80;
+            var percentualReducaoMaxima = 0.05;
 
             if (pesoCorporal > pesoCorporalReferencia) {
                 // Calcula a redução do percentual base
                 var reducaoPercentual = Math.min((pesoCorporal - pesoCorporalReferencia) / pesoCorporalReferencia * percentualReducaoMaxima, percentualReducaoMaxima);
                 percentualBase -= reducaoPercentual;
-                percentualBase = Math.max(percentualBase, 0.10); // Assegura que o percentual não fique abaixo de 10%
+                percentualBase = Math.max(percentualBase, 0.10);
             }
 
             // Cálculo do peso ideal da mochila
             var pesoMochila = pesoCorporal * percentualBase;
 
-            // Exibe o resultado
-            var resultadoTexto = "Com um IMC de " + imc.toFixed(2) + ", o peso confortável da mochila para " + genero + " é de aproximadamente " + 
+            // Classificação do IMC
+            var classificacaoIMC;
+            if (imc < 18.5) {
+                classificacaoIMC = "Magreza";
+            } else if (imc < 25) {
+                classificacaoIMC = "Normal";
+            } else if (imc < 30) {
+                classificacaoIMC = "Sobrepeso";
+            } else if (imc < 40) {
+                classificacaoIMC = "Obesidade";
+            } else {
+                classificacaoIMC = "Obesidade Grave";
+            }
+
+            // Formata o IMC com duas casas antes da vírgula
+            var imcFormatado = imc.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+            // Exibe o resultado com a classificação do IMC
+            var resultadoTexto = "Com um IMC de " + imcFormatado + " (" + classificacaoIMC + "), o peso confortável da mochila para " + genero + " é de aproximadamente " + 
                                  pesoMochila.toFixed(2) + " kg.";
 
             document.getElementById('resultado').innerText = resultadoTexto;
