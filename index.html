@@ -71,14 +71,6 @@
             <option value="mulher">Mulher</option>
         </select>
 
-        <label for="nivelTrilha">Nível da Trilha:</label>
-        <select id="nivelTrilha" name="nivelTrilha" required>
-            <option value="">Selecione</option>
-            <option value="leve">Leve (10% - 15%)</option>
-            <option value="moderada">Moderada (15% - 20%)</option>
-            <option value="dificil">Difícil (20% - 25%)</option>
-        </select>
-
         <button type="button" onclick="calcularPesoMochila()">Calcular Peso da Mochila</button>
 
         <div class="result" id="resultado"></div>
@@ -89,31 +81,22 @@
             var pesoCorporal = parseFloat(document.getElementById('pesoCorporal').value);
             var altura = parseFloat(document.getElementById('altura').value);
             var genero = document.getElementById('genero').value;
-            var nivelTrilha = document.getElementById('nivelTrilha').value;
-            var percentual = 0;
             var imc = pesoCorporal / Math.pow(altura / 100, 2); // Cálculo do IMC
 
-            if (nivelTrilha === "leve") {
-                percentual = 0.10; // 10%
-            } else if (nivelTrilha === "moderada") {
-                percentual = 0.15; // 15%
-            } else if (nivelTrilha === "dificil") {
-                percentual = 0.20; // 20%
-            }
-
-            // Ajuste baseado no IMC
+            // Ajuste do percentual recomendado para a mochila com base no IMC
+            var percentualBase = 0.15; // 15% do peso corporal como base
             var ajustePercentual = 0;
+
             if (imc < 18.5) {
                 ajustePercentual = -0.02; // Subtrai 2% se o IMC indicar que a pessoa está abaixo do peso
             } else if (imc >= 25) {
                 ajustePercentual = 0.02; // Adiciona 2% se o IMC indicar sobrepeso
             }
 
-            var pesoMochilaMin = pesoCorporal * (percentual + ajustePercentual);
-            var pesoMochilaMax = pesoCorporal * (percentual + ajustePercentual + 0.05);
+            var pesoMochila = pesoCorporal * (percentualBase + ajustePercentual);
 
-            var resultadoTexto = "Com um IMC de " + imc.toFixed(2) + ", para uma trilha " + nivelTrilha + ", o peso ideal da mochila para " + genero + 
-                                 " é entre " + pesoMochilaMin.toFixed(2) + " kg e " + pesoMochilaMax.toFixed(2) + " kg.";
+            var resultadoTexto = "Com um IMC de " + imc.toFixed(2) + ", o peso ideal da mochila para " + genero + " é " + 
+                                 pesoMochila.toFixed(2) + " kg.";
 
             document.getElementById('resultado').innerText = resultadoTexto;
         }
