@@ -86,25 +86,24 @@
             var imc = pesoCorporal / Math.pow(altura / 100, 2);
 
             // Percentuais base para homens e mulheres
-            var percentualBase = genero === "homem" ? 0.20 : 0.15;
+            var percentualBase = (genero === "homem") ? 0.20 : 0.15;
 
-            // Ajuste dinâmico do percentual
-            var percentualMinimo = 0.10;
-            var pesoCorporalReferencia = 80;
-            var fatorReducao = 0.005;
+            // Ajuste dinâmico do percentual com base no peso corporal
+            var pesoCorporalReferencia = 80; // Peso a partir do qual começa a redução do percentual
+            var percentualReducaoMaxima = 0.05; // Máxima redução no percentual base
 
-            // Calcula a redução proporcional do percentual
             if (pesoCorporal > pesoCorporalReferencia) {
-                var reducaoPercentual = fatorReducao * (pesoCorporal - pesoCorporalReferencia);
+                // Calcula a redução do percentual base
+                var reducaoPercentual = Math.min((pesoCorporal - pesoCorporalReferencia) / pesoCorporalReferencia * percentualReducaoMaxima, percentualReducaoMaxima);
                 percentualBase -= reducaoPercentual;
-                percentualBase = Math.max(percentualBase, percentualMinimo);
+                percentualBase = Math.max(percentualBase, 0.10); // Assegura que o percentual não fique abaixo de 10%
             }
 
             // Cálculo do peso ideal da mochila
             var pesoMochila = pesoCorporal * percentualBase;
 
             // Exibe o resultado
-            var resultadoTexto = "Com um IMC de " + imc.toFixed(2) + ", o peso confortável da mochila para " + genero + " é " + 
+            var resultadoTexto = "Com um IMC de " + imc.toFixed(2) + ", o peso confortável da mochila para " + genero + " é de aproximadamente " + 
                                  pesoMochila.toFixed(2) + " kg.";
 
             document.getElementById('resultado').innerText = resultadoTexto;
